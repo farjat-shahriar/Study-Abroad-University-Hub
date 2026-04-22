@@ -8,6 +8,7 @@ import {
   PaginationState,
   SortState,
 } from '../models/university.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class UniversityService {
@@ -65,11 +66,12 @@ export class UniversityService {
       return of(cached);
     }
 
-    const url = this.countryDataUrls[country];
-    if (!url) {
+    const path = this.countryDataUrls[country];
+    if (!path) {
       this.errorSubject.next(`No data available for ${country}`);
       return of([]);
     }
+    const url = environment.apiBaseUrl ? `${environment.apiBaseUrl}/${path}` : path;
 
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
