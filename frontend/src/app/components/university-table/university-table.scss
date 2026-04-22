@@ -1,0 +1,288 @@
+// ═══════════════════════════════════════════════
+// University Table — Blue Modern Education Palette
+// ═══════════════════════════════════════════════
+
+.table-container {
+  margin: 0 24px 24px;
+}
+
+.results-count {
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.table-wrapper {
+  border-radius: 10px;
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 720px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+  // Sticky header — softer slate instead of full dark
+  th.mat-mdc-header-cell {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #1E293B;
+    color: #E2E8F0;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    border-bottom: 2px solid #3B82F6;
+  }
+
+  // Slim scrollbar
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #F1F5F9;
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #94A3B8;
+    border-radius: 5px;
+
+    &:hover {
+      background: #3B82F6;
+    }
+  }
+  scrollbar-width: thin;
+  scrollbar-color: #94A3B8 #F1F5F9;
+}
+
+table {
+  width: 100%;
+}
+
+.table-row {
+  transition: background-color 0.15s;
+
+  &:hover {
+    background-color: #EEF2FF; // warm blue-tinted hover
+  }
+
+  // Alternating row stripes for readability
+  &:nth-child(even) {
+    background-color: #F8FAFC;
+
+    &:hover {
+      background-color: #EEF2FF;
+    }
+  }
+}
+
+// ── QS Rank ──
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 14px;
+  background: #F1F5F9;
+  color: #475569;
+  font-weight: 700;
+  font-size: 12px;
+  white-space: nowrap;
+
+  &.rank-top100 {
+    background: #2563EB;
+    color: #fff;
+  }
+
+  &.rank-top500 {
+    background: #60A5FA;
+    color: #0F172A;
+  }
+}
+
+.rank-unranked {
+  color: #CBD5E1;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+// ── University name ──
+.uni-name {
+  font-weight: 500;
+  color: #0F172A;
+  font-size: 14px;
+}
+
+.uni-local-name {
+  font-size: 11px;
+  color: #94A3B8;
+  margin-top: 2px;
+  max-width: 280px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ── Type chips ──
+.type-chip {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.type-public {
+  background: #DBEAFE;
+  color: #2563EB;
+}
+
+.type-private {
+  background: #FEE2E2;
+  color: #EF4444;
+}
+
+.type-church {
+  background: #FEF3C7;
+  color: #D97706;
+}
+
+// ── Degree chips ──
+.degree-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.degree-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  background: #F1F5F9;
+  color: #475569;
+  font-weight: 500;
+  border: 1px solid #E2E8F0;
+}
+
+// ── Cost cell ──
+.cost-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 160px;
+  cursor: help;
+}
+
+.cost-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  width: fit-content;
+}
+
+.cost-free-badge {
+  background: #10B981;
+  color: #fff;
+}
+
+.cost-paid-badge {
+  background: #F59E0B;
+  color: #fff;
+}
+
+.cost-free-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #10B981;
+  line-height: 1.2;
+}
+
+.cost-eur {
+  font-size: 14px;
+  font-weight: 700;
+  padding: 1px 0;
+}
+
+.cost-bdt {
+  font-size: 11px;
+  color: #475569;
+  font-weight: 500;
+}
+
+.cost-note {
+  font-size: 9px;
+  color: #94A3B8;
+  font-style: italic;
+  max-width: 200px;
+  line-height: 1.3;
+}
+
+.cost-free {
+  color: #10B981;
+}
+
+.cost-low {
+  color: #3B82F6;
+}
+
+.cost-medium {
+  color: #F59E0B;
+}
+
+.cost-high {
+  color: #EF4444;
+}
+
+// ── Requirements ──
+.requirements-text {
+  font-size: 12px;
+  color: #475569;
+  max-width: 200px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ── Website link ──
+.website-link {
+  color: #2563EB;
+}
+
+// ── No results ──
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64px 24px;
+  color: #94A3B8;
+
+  h3 {
+    margin: 12px 0 4px;
+    color: #475569;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.no-results-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #CBD5E1;
+}
+
+@media (max-width: 600px) {
+  .table-container {
+    margin: 0 12px 12px;
+  }
+}

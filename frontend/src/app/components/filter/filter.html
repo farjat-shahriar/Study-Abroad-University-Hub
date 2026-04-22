@@ -1,0 +1,139 @@
+<div class="filter-card">
+  <form [formGroup]="filterForm" class="filter-form">
+    <!-- Search Row -->
+    <div class="filter-top-row">
+      <div class="field-group search-group">
+        <label class="field-label">Search University</label>
+        <div class="custom-input-box">
+          <mat-icon class="input-icon">search</mat-icon>
+          <input type="text"
+                 formControlName="searchTerm"
+                 placeholder="e.g. TU Munich, Berlin..."
+                 class="custom-input">
+        </div>
+      </div>
+      <div class="field-group country-group">
+        <label class="field-label">Country</label>
+        <div class="custom-input-box disabled">
+          <mat-icon class="input-icon">public</mat-icon>
+          <input type="text" formControlName="country" class="custom-input" readonly>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dropdown Filter Row -->
+    <div class="filter-row">
+      <!-- State (searchable) -->
+      <div class="field-group">
+        <label class="field-label">State</label>
+        <div class="custom-select-wrapper">
+          <mat-select formControlName="state"
+                      panelClass="bma-panel"
+                      placeholder="Select state"
+                      (opened)="onDropdownOpened('state')">
+            <div class="bma-search-wrapper" (click)="$event.stopPropagation()">
+              <mat-icon class="bma-search-icon">search</mat-icon>
+              <input class="bma-search-input"
+                     placeholder="Search states..."
+                     [(ngModel)]="stateSearch"
+                     [ngModelOptions]="{standalone: true}"
+                     (input)="onStateSearchChange()"
+                     (keydown)="$event.stopPropagation()">
+            </div>
+            <mat-option value="">All States</mat-option>
+            @for (state of filteredStates; track state) {
+              <mat-option [value]="state">{{ state }}</mat-option>
+            }
+          </mat-select>
+          <mat-icon class="select-arrow">expand_more</mat-icon>
+        </div>
+      </div>
+
+      <!-- City (searchable) -->
+      <div class="field-group">
+        <label class="field-label">City</label>
+        <div class="custom-select-wrapper">
+          <mat-select formControlName="city"
+                      panelClass="bma-panel"
+                      placeholder="Select city"
+                      (opened)="onDropdownOpened('city')">
+            <div class="bma-search-wrapper" (click)="$event.stopPropagation()">
+              <mat-icon class="bma-search-icon">search</mat-icon>
+              <input class="bma-search-input"
+                     placeholder="Search cities..."
+                     [(ngModel)]="citySearch"
+                     [ngModelOptions]="{standalone: true}"
+                     (input)="onCitySearchChange()"
+                     (keydown)="$event.stopPropagation()">
+            </div>
+            <mat-option value="">All Cities</mat-option>
+            @for (city of filteredCities; track city) {
+              <mat-option [value]="city">{{ city }}</mat-option>
+            }
+          </mat-select>
+          <mat-icon class="select-arrow">expand_more</mat-icon>
+        </div>
+      </div>
+
+      <!-- University Type -->
+      <div class="field-group">
+        <label class="field-label">University Type</label>
+        <div class="custom-select-wrapper">
+          <mat-select formControlName="type"
+                      panelClass="bma-panel"
+                      placeholder="Select type">
+            <mat-option value="">All Types</mat-option>
+            @for (type of filterOptions?.types; track type) {
+              <mat-option [value]="type">{{ type }}</mat-option>
+            }
+          </mat-select>
+          <mat-icon class="select-arrow">expand_more</mat-icon>
+        </div>
+      </div>
+
+      <!-- Degree Type -->
+      <div class="field-group">
+        <label class="field-label">Degree Type</label>
+        <div class="custom-select-wrapper">
+          <mat-select formControlName="degreeType"
+                      panelClass="bma-panel"
+                      placeholder="Select degree">
+            <mat-option value="">All Degrees</mat-option>
+            @for (degree of filterOptions?.degreeTypes; track degree) {
+              <mat-option [value]="degree">{{ degree }}</mat-option>
+            }
+          </mat-select>
+          <mat-icon class="select-arrow">expand_more</mat-icon>
+        </div>
+      </div>
+
+      <!-- Cost Range -->
+      <div class="field-group">
+        <label class="field-label">Cost Range</label>
+        <div class="custom-select-wrapper">
+          <mat-select formControlName="costCategory"
+                      panelClass="bma-panel"
+                      placeholder="Select cost">
+            <mat-option value="">All Costs</mat-option>
+            @for (cost of filterOptions?.costCategories; track cost) {
+              <mat-option [value]="cost">{{ cost }}</mat-option>
+            }
+          </mat-select>
+          <mat-icon class="select-arrow">expand_more</mat-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="filter-actions">
+      <button type="button" class="btn-filter" (click)="onApplyFilters()">
+        <mat-icon>filter_alt</mat-icon>
+        Filter
+      </button>
+      <button type="button" class="btn-reset" (click)="onResetFilters()">
+        <mat-icon>refresh</mat-icon>
+        Reset
+      </button>
+    </div>
+  </form>
+</div>

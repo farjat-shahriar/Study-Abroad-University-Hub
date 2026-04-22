@@ -1,0 +1,222 @@
+// ═══════════════════════════════════════
+// BMA-Style Filter Card
+// ═══════════════════════════════════════
+
+.filter-card {
+  margin: 20px 24px 12px;
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 20px 22px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.filter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// ── Field Group (Label above + Input below) ──
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+  letter-spacing: 0.2px;
+}
+
+// ── Top Row (Search + Country) ──
+.filter-top-row {
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  gap: 16px;
+}
+
+// ── Filter Row (Dropdowns) ──
+.filter-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 16px;
+}
+
+// ── Custom Input Box (text inputs) ──
+.custom-input-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 0 12px;
+  height: 42px;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:focus-within {
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  &.disabled {
+    background: #F8FAFC;
+    cursor: not-allowed;
+  }
+}
+
+.input-icon {
+  color: #aaa;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.custom-input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  width: 100%;
+  padding: 0;
+  font-family: inherit;
+  color: #333;
+  background: transparent;
+  line-height: 42px;
+
+  &::placeholder {
+    color: #bbb;
+  }
+
+  &:read-only {
+    color: #888;
+    cursor: not-allowed;
+  }
+}
+
+// ── Custom Select Wrapper (mat-select inside BMA border) ──
+.custom-select-wrapper {
+  position: relative;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #94A3B8;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.06);
+  }
+
+  // Remove default mat-select underline/border
+  mat-select {
+    flex: 1;
+    font-size: 14px;
+  }
+
+  // Hide default mat-select arrow
+  ::ng-deep {
+    .mat-mdc-select-arrow-wrapper {
+      display: none !important;
+    }
+    .mat-mdc-select-trigger {
+      padding: 0;
+      height: 42px;
+    }
+    .mat-mdc-select-value {
+      max-width: calc(100% - 24px);
+    }
+    .mat-mdc-select-placeholder {
+      color: #bbb;
+    }
+  }
+}
+
+.select-arrow {
+  color: #999;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
+}
+
+// Search wrapper & options styles are in global styles.scss
+// because the dropdown panel renders in CDK overlay outside this component.
+
+// ── Action Buttons ──
+.filter-actions {
+  display: flex;
+  gap: 10px;
+  padding-top: 2px;
+}
+
+.btn-filter,
+.btn-reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.btn-filter {
+  background: #3B82F6;
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.3);
+
+  &:hover {
+    background: #2563EB;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
+  }
+}
+
+.btn-reset {
+  background: #F1F5F9;
+  color: #475569;
+  border: 1px solid #E2E8F0;
+
+  &:hover {
+    background: #E2E8F0;
+  }
+}
+
+// ── Responsive ──
+@media (max-width: 768px) {
+  .filter-card {
+    margin: 12px;
+    padding: 16px;
+  }
+
+  .filter-top-row {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-row {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,17 @@
+<div class="app-shell">
+  <!-- Sidebar -->
+  <app-sidebar (sidebarToggled)="onSidebarToggled($event)" />
+
+  <!-- Main Area -->
+  <div class="main-area" [class.sidebar-collapsed]="sidebarCollapsed">
+    <app-header />
+
+    <main class="page-content">
+      <router-outlet />
+    </main>
+
+    <footer class="app-footer">
+      <p>Study Abroad University Hub &mdash; Schengen Zone Universities</p>
+    </footer>
+  </div>
+</div>

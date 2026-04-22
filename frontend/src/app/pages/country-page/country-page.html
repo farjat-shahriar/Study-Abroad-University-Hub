@@ -1,0 +1,45 @@
+<!-- Page Header -->
+<div class="page-header">
+  <div class="page-header-left">
+    <span class="country-flag">{{ countryInfo?.flag || '🌍' }}</span>
+    <div>
+      <h1 class="page-title">{{ countryInfo?.name || 'Universities' }}</h1>
+      <p class="page-subtitle">Browse all {{ pagination.totalItems }} public, private & church-affiliated universities</p>
+    </div>
+  </div>
+</div>
+
+<!-- Content -->
+@if (loading) {
+  <app-loading-spinner />
+} @else if (error) {
+  <div class="error-container">
+    <mat-icon class="error-icon">error_outline</mat-icon>
+    <h3>Something went wrong</h3>
+    <p>{{ error }}</p>
+  </div>
+} @else {
+  <app-filter
+    [filterOptions]="filterOptions"
+    [countryName]="countryInfo?.name || 'Germany'"
+    (filtersApplied)="onFiltersApplied($event)" />
+
+  <app-university-table
+    [universities]="displayedUniversities"
+    [totalItems]="pagination.totalItems"
+    [pagination]="pagination"
+    [countrySlug]="countrySlug"
+    (sortChanged)="onSortChanged($event)"
+    (pageChanged)="onPageChanged($event)" />
+
+  <!-- Fee Disclaimer -->
+  <div class="fee-disclaimer">
+    <mat-icon class="disclaimer-icon">info</mat-icon>
+    <p>
+      <strong>Disclaimer:</strong> Tuition fees shown are for non-EU/EEA international students (2025-2026).
+      Fees are verified from official university websites where possible. Actual fees may vary by specific program,
+      student nationality, and intake year. Always confirm exact fees on the university's official website before applying.
+      Hover over fees to see the source.
+    </p>
+  </div>
+}

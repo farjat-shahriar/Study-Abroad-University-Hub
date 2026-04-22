@@ -1,0 +1,69 @@
+<aside class="sidebar" [class.collapsed]="isCollapsed">
+  <!-- Logo / Brand -->
+  <div class="sidebar-brand">
+    <div class="brand-icon">
+      <mat-icon>school</mat-icon>
+    </div>
+    @if (!isCollapsed) {
+      <div class="brand-text">
+        <span class="brand-title">Study Abroad</span>
+        <span class="brand-sub">University Hub</span>
+      </div>
+    }
+  </div>
+
+  <!-- Toggle -->
+  <button class="sidebar-toggle" (click)="toggleSidebar()">
+    <mat-icon>{{ isCollapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+  </button>
+
+  <!-- Country List (scrollable) -->
+  <nav class="sidebar-nav">
+    <!-- Active Countries Group -->
+    @if (!isCollapsed) {
+      <div class="sidebar-section-label">
+        <span>AVAILABLE</span>
+      </div>
+    }
+    @for (country of activeCountries; track country.slug) {
+      <a class="nav-item"
+         [routerLink]="['/country', country.slug]"
+         routerLinkActive="active"
+         [matTooltip]="isCollapsed ? country.name : ''"
+         matTooltipPosition="right">
+        <span class="nav-flag">{{ country.flag }}</span>
+        @if (!isCollapsed) {
+          <span class="nav-label">{{ country.name }}</span>
+          <span class="nav-badge active-badge">Live</span>
+        }
+      </a>
+    }
+
+    <!-- Upcoming Countries Group -->
+    @if (!isCollapsed) {
+      <div class="sidebar-section-label upcoming-label">
+        <span>COMING SOON</span>
+      </div>
+    }
+    @for (country of upcomingCountries; track country.slug) {
+      <a class="nav-item"
+         [routerLink]="['/country', country.slug]"
+         routerLinkActive="active"
+         [matTooltip]="isCollapsed ? country.name : ''"
+         matTooltipPosition="right">
+        <span class="nav-flag">{{ country.flag }}</span>
+        @if (!isCollapsed) {
+          <span class="nav-label">{{ country.name }}</span>
+        }
+      </a>
+    }
+  </nav>
+
+  <!-- Footer -->
+  @if (!isCollapsed) {
+    <div class="sidebar-footer">
+      <mat-icon>info</mat-icon>
+      <span>v1.0 &mdash; Germany Active</span>
+    </div>
+  }
+</aside>

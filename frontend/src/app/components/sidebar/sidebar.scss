@@ -1,0 +1,282 @@
+// ═══════════════════════════════════════════════
+// Sidebar — Refined Blue Education Theme
+// ═══════════════════════════════════════════════
+
+$sidebar-bg: #111827;          // slightly lighter navy (was #0F172A)
+$sidebar-bg-lighter: #1a2235;  // subtle lighter shade for depth
+$sidebar-text: #CBD5E1;
+$sidebar-text-muted: #64748B;
+$sidebar-hover: #1E293B;
+$sidebar-active-bg: rgba(59, 130, 246, 0.15); // softer blue glow
+$sidebar-active-border: #3B82F6;
+$accent-blue: #3B82F6;         // softer education blue (was #2563EB)
+$sidebar-width: 260px;
+$sidebar-collapsed: 64px;
+
+.sidebar {
+  width: $sidebar-width;
+  min-width: $sidebar-width;
+  height: 100vh;
+  // Subtle gradient — not flat
+  background: linear-gradient(180deg, $sidebar-bg 0%, #0d1320 100%);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  transition: width 0.25s ease, min-width 0.25s ease;
+  z-index: 200;
+
+  &.collapsed {
+    width: $sidebar-collapsed;
+    min-width: $sidebar-collapsed;
+  }
+}
+
+// ── Brand ──
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 16px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.02); // very subtle lift
+}
+
+.brand-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, $accent-blue 0%, #60A5FA 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+
+  mat-icon {
+    color: #fff;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.brand-title {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+
+.brand-sub {
+  color: $sidebar-text-muted;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+// ── Toggle ──
+.sidebar-toggle {
+  background: none;
+  border: none;
+  color: $sidebar-text-muted;
+  cursor: pointer;
+  padding: 6px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  transition: color 0.2s;
+  flex-shrink: 0;
+
+  &:hover {
+    color: $sidebar-text;
+  }
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+// ── Section labels (inside nav, scroll with it) ──
+.sidebar-section-label {
+  padding: 14px 6px 6px;
+  color: $sidebar-text-muted;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+.upcoming-label {
+  margin-top: 6px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+// ── Scrollable country list ──
+.sidebar-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 4px 8px;
+  gap: 2px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+  }
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+}
+
+// ── Nav items ──
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  color: $sidebar-text;
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+  border-left: 3px solid transparent;
+
+  &:hover {
+    background: $sidebar-hover;
+    color: #fff;
+  }
+
+  // Active state — soft blue glow + left border accent
+  &.active {
+    background: $sidebar-active-bg;
+    border-left-color: $sidebar-active-border;
+    color: #fff;
+    font-weight: 500;
+
+    .nav-flag {
+      transform: scale(1.1);
+    }
+
+    .nav-label {
+      color: #E0EAFF;
+    }
+  }
+}
+
+.nav-flag {
+  font-size: 18px;
+  flex-shrink: 0;
+  transition: transform 0.15s;
+  width: 22px;
+  text-align: center;
+}
+
+.nav-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 2px 7px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.active-badge {
+  background: rgba(59, 130, 246, 0.25);
+  color: #60A5FA;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.soon-badge {
+  background: rgba(255, 255, 255, 0.05);
+  color: $sidebar-text-muted;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+// ── Footer ──
+.sidebar-footer {
+  padding: 14px 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: $sidebar-text-muted;
+  font-size: 11px;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  mat-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+// ── Collapsed ──
+.collapsed {
+  .sidebar-brand {
+    justify-content: center;
+    padding: 18px 0 14px;
+  }
+
+  .sidebar-toggle {
+    justify-content: center;
+    padding: 6px 0;
+  }
+
+  .sidebar-nav {
+    padding: 4px;
+  }
+
+  .nav-item {
+    justify-content: center;
+    padding: 10px;
+    border-left: none;
+  }
+}

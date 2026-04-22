@@ -1,0 +1,46 @@
+<div class="coming-soon-container">
+  <div class="coming-soon-card">
+    @if (country) {
+      <span class="cs-flag">{{ country.flag }}</span>
+      <h1 class="cs-title">{{ country.name }}</h1>
+    } @else {
+      <mat-icon class="cs-icon">public</mat-icon>
+      <h1 class="cs-title">Country</h1>
+    }
+
+    <div class="cs-badge">
+      <mat-icon>schedule</mat-icon>
+      Coming Soon
+    </div>
+
+    <p class="cs-description">
+      We're working hard to bring you comprehensive university data for
+      <strong>{{ country?.name || 'this country' }}</strong>.
+      Stay tuned for updates!
+    </p>
+
+    <div class="cs-features">
+      <div class="cs-feature">
+        <mat-icon>school</mat-icon>
+        <span>University listings</span>
+      </div>
+      <div class="cs-feature">
+        <mat-icon>filter_list</mat-icon>
+        <span>Advanced filters</span>
+      </div>
+      <div class="cs-feature">
+        <mat-icon>payments</mat-icon>
+        <span>Tuition & cost info</span>
+      </div>
+      <div class="cs-feature">
+        <mat-icon>checklist</mat-icon>
+        <span>Admission requirements</span>
+      </div>
+    </div>
+
+    <a mat-raised-button color="primary" [routerLink]="['/country', 'germany']" class="cs-cta">
+      <mat-icon>arrow_back</mat-icon>
+      Explore Germany (Live)
+    </a>
+  </div>
+</div>
