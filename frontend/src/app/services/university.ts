@@ -46,6 +46,15 @@ export class UniversityService {
     iceland: 'data/iceland-universities.json',
     liechtenstein: 'data/liechtenstein-universities.json',
     luxembourg: 'data/luxembourg-universities.json',
+    uk: 'data/uk-universities.json',
+    wales: 'data/wales-universities.json',
+    ireland: 'data/ireland-universities.json',
+    usa: 'data/usa-universities.json',
+    australia: 'data/australia-universities.json',
+    'new-zealand': 'data/new-zealand-universities.json',
+    malaysia: 'data/malaysia-universities.json',
+    japan: 'data/japan-universities.json',
+    'south-korea': 'data/south-korea-universities.json',
   };
 
   private readonly loadingSubject = new BehaviorSubject<boolean>(false);

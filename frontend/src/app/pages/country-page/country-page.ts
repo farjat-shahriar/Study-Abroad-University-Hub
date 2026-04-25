@@ -7,7 +7,7 @@ import { Filter } from '../../components/filter/filter';
 import { UniversityTable } from '../../components/university-table/university-table';
 import { LoadingSpinner } from '../../components/loading-spinner/loading-spinner';
 import { UniversityService } from '../../services/university';
-import { SCHENGEN_COUNTRIES, Country } from '../../models/country.model';
+import { REGION_GROUPS, Country } from '../../models/country.model';
 import {
   University,
   UniversityFilters,
@@ -67,7 +67,7 @@ export class CountryPage implements OnInit, OnDestroy {
       const slug = segments.length > 0 ? segments[segments.length - 1].path : 'germany';
       if (slug !== this.countrySlug) {
         this.countrySlug = slug;
-        this.countryInfo = SCHENGEN_COUNTRIES.find((c) => c.slug === slug) || null;
+        this.countryInfo = REGION_GROUPS.flatMap((g) => g.countries).find((c) => c.slug === slug) || null;
         this.currentFilters.country = this.countryInfo?.name || 'Germany';
         this.loadData();
       }

@@ -5,6 +5,13 @@ export interface Country {
   isActive: boolean;
 }
 
+export interface RegionGroup {
+  label: string;
+  icon: string;
+  slug: string;
+  countries: Country[];
+}
+
 export const SCHENGEN_COUNTRIES: Country[] = [
   { name: 'Germany', slug: 'germany', flag: '🇩🇪', isActive: true },
   { name: 'Austria', slug: 'austria', flag: '🇦🇹', isActive: true },
@@ -35,4 +42,59 @@ export const SCHENGEN_COUNTRIES: Country[] = [
   { name: 'Spain', slug: 'spain', flag: '🇪🇸', isActive: true },
   { name: 'Sweden', slug: 'sweden', flag: '🇸🇪', isActive: true },
   { name: 'Switzerland', slug: 'switzerland', flag: '🇨🇭', isActive: true },
+];
+
+export const UK_COUNTRIES: Country[] = [
+  { name: 'England', slug: 'uk',    flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', isActive: true },
+  { name: 'Wales',   slug: 'wales', flag: '🏴󠁧󠁢󠁷󠁬󠁳󠁿', isActive: true },
+];
+
+export const OCEANIA_COUNTRIES: Country[] = [
+  { name: 'Australia',    slug: 'australia',    flag: '🇦🇺', isActive: true },
+  { name: 'New Zealand',  slug: 'new-zealand',  flag: '🇳🇿', isActive: true },
+];
+
+export const ASIA_COUNTRIES: Country[] = [
+  { name: 'Malaysia',    slug: 'malaysia',     flag: '🇲🇾', isActive: true },
+  { name: 'Japan',       slug: 'japan',        flag: '🇯🇵', isActive: true },
+  { name: 'South Korea', slug: 'south-korea',  flag: '🇰🇷', isActive: true },
+];
+
+export const REGION_GROUPS: RegionGroup[] = [
+  {
+    label: 'Europe (Schengen)',
+    icon: '🇪🇺',
+    slug: 'schengen',
+    countries: SCHENGEN_COUNTRIES,
+  },
+  {
+    label: 'United Kingdom',
+    icon: '🇬🇧',
+    slug: 'uk-group',
+    countries: UK_COUNTRIES,
+  },
+  {
+    label: 'Ireland',
+    icon: '🇮🇪',
+    slug: 'ireland',
+    countries: [{ name: 'Ireland', slug: 'ireland', flag: '🇮🇪', isActive: true }],
+  },
+  {
+    label: 'United States',
+    icon: '🇺🇸',
+    slug: 'usa',
+    countries: [{ name: 'United States', slug: 'usa', flag: '🇺🇸', isActive: true }],
+  },
+  {
+    label: 'Oceania',
+    icon: '🌏',
+    slug: 'oceania',
+    countries: OCEANIA_COUNTRIES,
+  },
+  {
+    label: 'Asia',
+    icon: '🌏',
+    slug: 'asia',
+    countries: ASIA_COUNTRIES,
+  },
 ];

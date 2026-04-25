@@ -1,5 +1,6 @@
 <aside class="sidebar" [class.collapsed]="isCollapsed">
-  <!-- Logo / Brand -->
+
+  <!-- Brand -->
   <div class="sidebar-brand">
     <div class="brand-icon">
       <mat-icon>school</mat-icon>
@@ -12,58 +13,71 @@
     }
   </div>
 
-  <!-- Toggle -->
+  <!-- Collapse toggle -->
   <button class="sidebar-toggle" (click)="toggleSidebar()">
     <mat-icon>{{ isCollapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
   </button>
 
-  <!-- Country List (scrollable) -->
+  <!-- Nav -->
   <nav class="sidebar-nav">
-    <!-- Active Countries Group -->
-    @if (!isCollapsed) {
-      <div class="sidebar-section-label">
-        <span>AVAILABLE</span>
-      </div>
-    }
-    @for (country of activeCountries; track country.slug) {
-      <a class="nav-item"
-         [routerLink]="['/country', country.slug]"
-         routerLinkActive="active"
-         [matTooltip]="isCollapsed ? country.name : ''"
-         matTooltipPosition="right">
-        <span class="nav-flag">{{ country.flag }}</span>
-        @if (!isCollapsed) {
-          <span class="nav-label">{{ country.name }}</span>
-          <span class="nav-badge active-badge">Live</span>
-        }
-      </a>
-    }
+    @for (group of regionGroups; track group.slug) {
 
-    <!-- Upcoming Countries Group -->
-    @if (!isCollapsed) {
-      <div class="sidebar-section-label upcoming-label">
-        <span>COMING SOON</span>
-      </div>
-    }
-    @for (country of upcomingCountries; track country.slug) {
-      <a class="nav-item"
-         [routerLink]="['/country', country.slug]"
-         routerLinkActive="active"
-         [matTooltip]="isCollapsed ? country.name : ''"
-         matTooltipPosition="right">
-        <span class="nav-flag">{{ country.flag }}</span>
-        @if (!isCollapsed) {
-          <span class="nav-label">{{ country.name }}</span>
-        }
-      </a>
+      @if (isSingleCountryGroup(group)) {
+        <!-- Single country → direct link -->
+        <a class="nav-item"
+           [routerLink]="['/country', group.countries[0].slug]"
+           routerLinkActive="active"
+           [matTooltip]="isCollapsed ? group.label : ''"
+           matTooltipPosition="right">
+          <span class="nav-flag">{{ group.icon }}</span>
+          @if (!isCollapsed) {
+            <span class="nav-label">{{ group.label }}</span>
+          }
+        </a>
+
+      } @else {
+        <!-- Multi-country → collapsible group -->
+        <div class="nav-group">
+          <button class="nav-group-header"
+                  (click)="toggleGroup(group.slug)"
+                  [matTooltip]="isCollapsed ? group.label : ''"
+                  matTooltipPosition="right">
+            <span class="nav-flag">{{ group.icon }}</span>
+            @if (!isCollapsed) {
+              <span class="nav-group-label">{{ group.label }}</span>
+              <mat-icon class="nav-group-arrow" [class.expanded]="isGroupExpanded(group.slug)">
+                expand_more
+              </mat-icon>
+            }
+          </button>
+
+          @if (isGroupExpanded(group.slug)) {
+            <div class="nav-group-items" [class.collapsed-items]="isCollapsed">
+              @for (country of group.countries; track country.slug) {
+                <a class="nav-item nav-subitem"
+                   [class.nav-subitem-collapsed]="isCollapsed"
+                   [routerLink]="['/country', country.slug]"
+                   routerLinkActive="active"
+                   [matTooltip]="isCollapsed ? country.name : ''"
+                   matTooltipPosition="right">
+                  <span class="nav-flag">{{ country.flag }}</span>
+                  @if (!isCollapsed) {
+                    <span class="nav-label">{{ country.name }}</span>
+                  }
+                </a>
+              }
+            </div>
+          }
+        </div>
+      }
     }
   </nav>
 
   <!-- Footer -->
   @if (!isCollapsed) {
     <div class="sidebar-footer">
-      <mat-icon>info</mat-icon>
-      <span>v1.0 &mdash; Germany Active</span>
+      <mat-icon>public</mat-icon>
+      <span>v1.0 &mdash; 9 Regions</span>
     </div>
   }
 </aside>
