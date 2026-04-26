@@ -26,9 +26,11 @@
 
   <app-university-table
     [universities]="displayedUniversities"
+    [allFilteredUniversities]="filteredUniversities"
     [totalItems]="pagination.totalItems"
     [pagination]="pagination"
     [countrySlug]="countrySlug"
+    [countryName]="countryInfo?.name || countrySlug"
     (sortChanged)="onSortChanged($event)"
     (pageChanged)="onPageChanged($event)" />
 

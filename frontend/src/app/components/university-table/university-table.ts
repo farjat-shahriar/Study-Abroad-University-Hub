@@ -7,6 +7,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import * as XLSX from 'xlsx';
 import { University, PaginationState, SortState } from '../../models/university.model';
 
 @Component({
@@ -26,9 +27,11 @@ import { University, PaginationState, SortState } from '../../models/university.
 })
 export class UniversityTable {
   @Input() universities: University[] = [];
+  @Input() allFilteredUniversities: University[] = [];
   @Input() totalItems = 0;
   @Input() pagination: PaginationState = { pageIndex: 0, pageSize: 10, totalItems: 0 };
   @Input() countrySlug = 'germany';
+  @Input() countryName = '';
 
   @Output() sortChanged = new EventEmitter<SortState>();
   @Output() pageChanged = new EventEmitter<PaginationState>();
@@ -89,5 +92,49 @@ export class UniversityTable {
   formatBDT(amount: number, isFree: boolean): string {
     if (isFree || amount === 0) return '৳0';
     return `৳${amount.toLocaleString()}/yr`;
+  }
+
+  exportToExcel(): void {
+    const source = this.allFilteredUniversities.length
+      ? this.allFilteredUniversities
+      : this.universities;
+
+    const rows = source.map((u) => ({
+      'QS Rank': u.ranking ?? '—',
+      'University': u.name,
+      'Local Name': u.localName !== u.name ? u.localName : '',
+      'Country': u.country,
+      'City': u.city,
+      'State / Region': u.state,
+      'Type': u.type,
+      'Category': u.category,
+      'Degree Types': u.degreeTypes.join(', '),
+      'BSc Tuition (EUR/yr)': u.isTuitionFree ? 0 : u.bachelorTuitionEUR,
+      'BSc Tuition (BDT/yr)': u.isTuitionFree ? 0 : u.bachelorTuitionBDT,
+      'MSc Tuition (EUR/yr)': u.isTuitionFree ? 0 : u.masterTuitionEUR,
+      'MSc Tuition (BDT/yr)': u.isTuitionFree ? 0 : u.masterTuitionBDT,
+      'Semester Fee (EUR)': u.semesterbeitrag || 0,
+      'Tuition Free': u.isTuitionFree ? 'Yes' : 'No',
+      'Cost Category': u.costCategory,
+      'Tuition Note': u.tuitionNote,
+      'BSc Requirements': u.bachelorRequirements,
+      'MSc Requirements': u.masterRequirements,
+      'Website': u.websiteUrl,
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(rows);
+    ws['!cols'] = [
+      { wch: 8 }, { wch: 42 }, { wch: 36 }, { wch: 16 }, { wch: 20 },
+      { wch: 20 }, { wch: 18 }, { wch: 26 }, { wch: 22 },
+      { wch: 18 }, { wch: 18 }, { wch: 18 }, { wch: 18 },
+      { wch: 16 }, { wch: 12 }, { wch: 14 },
+      { wch: 45 }, { wch: 45 }, { wch: 45 }, { wch: 45 },
+    ];
+
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Universities');
+
+    const label = this.countryName || this.countrySlug;
+    XLSX.writeFile(wb, `${label}-universities.xlsx`);
   }
 }
