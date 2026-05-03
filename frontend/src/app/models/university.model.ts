@@ -25,6 +25,20 @@ export interface University {
   masterRequirements: string;
 
   websiteUrl: string;
+
+  // ── Phase 1 decision-support fields (optional — populated incrementally) ──
+  livingCostUSD?: number;
+  totalCostUSD?: number;
+  gpaRequirement?: number;
+  ieltsRequirement?: number;
+  englishMediumAllowed?: boolean;
+  studyGapAllowed?: boolean | 'conditional';
+  admissionDifficulty?: 'easy' | 'moderate' | 'competitive' | 'highly_competitive';
+  intakeSessions?: string[];
+  applicationDeadline?: string;
+  scholarshipAvailable?: boolean;
+  scholarshipDetails?: string;
+  applicationUrl?: string;
 }
 
 export interface UniversityFilters {
@@ -35,6 +49,30 @@ export interface UniversityFilters {
   degreeType: string;
   costCategory: string;
   searchTerm: string;
+  // Advanced eligibility filters
+  budgetMin?: number;
+  budgetMax?: number;
+  gpaMin?: number;
+  ieltsMin?: number;
+  admissionDifficulty?: string;
+  scholarshipOnly?: boolean;
+  studyGapAllowed?: boolean;
+}
+
+// ── Student profile ──
+export interface StudentProfile {
+  gpa: number;       // 0–4.0
+  ielts: number;     // 0–9.0
+  budgetMin: number; // USD/yr
+  budgetMax: number; // USD/yr
+}
+
+// ── Recommendation output ──
+export interface UniversityRecommendation {
+  university: University;
+  countrySlug: string;
+  countryName: string;
+  matchScore: number; // 0–100, higher = better match
 }
 
 export interface FilterOptions {

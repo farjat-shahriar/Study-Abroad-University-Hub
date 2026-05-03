@@ -3,7 +3,28 @@ import { CountryPage } from './pages/country-page/country-page';
 import { ComingSoon } from './pages/coming-soon/coming-soon';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/country/germany', pathMatch: 'full' },
+  // ── Dashboard (default landing) ──
+  {
+    path: '',
+    loadComponent: () =>
+      import('./pages/dashboard-page/dashboard-page').then((m) => m.DashboardPage),
+  },
+
+  // ── Recommendation engine ──
+  {
+    path: 'find',
+    loadComponent: () =>
+      import('./pages/home-page/home-page').then((m) => m.HomePage),
+  },
+
+  // ── University Detail ──
+  {
+    path: 'university/:id',
+    loadComponent: () =>
+      import('./pages/university-detail-page/university-detail-page').then(
+        (m) => m.UniversityDetailPage
+      ),
+  },
 
   // ── Europe (Schengen) ──
   { path: 'country/germany',        component: CountryPage },
@@ -57,5 +78,5 @@ export const routes: Routes = [
 
   // Fallback
   { path: 'country/:country', component: ComingSoon },
-  { path: '**', redirectTo: '/country/germany' },
+  { path: '**', redirectTo: '' },
 ];

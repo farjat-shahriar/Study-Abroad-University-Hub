@@ -1,0 +1,76 @@
+<div class="rec-card">
+  <!-- Rank badge -->
+  <div class="rank-badge">#{{ rank }}</div>
+
+  <!-- Header -->
+  <div class="card-header">
+    <span class="country-flag">{{ flag }}</span>
+    <div class="header-text">
+      <h3 class="uni-name">{{ recommendation.university.name }}</h3>
+      <p class="uni-location">{{ recommendation.university.city }}, {{ recommendation.countryName }}</p>
+    </div>
+    @if (recommendation.university.scholarshipAvailable) {
+      <span class="scholarship-chip" matTooltip="{{ recommendation.university.scholarshipDetails }}">
+        <mat-icon>card_giftcard</mat-icon>
+        Scholarship
+      </span>
+    }
+  </div>
+
+  <!-- Match score bar -->
+  <div class="match-section">
+    <span class="match-label">Match Score</span>
+    <div class="match-bar-track">
+      <div class="match-bar-fill" [style.width.%]="recommendation.matchScore"></div>
+    </div>
+    <span class="match-pct">{{ recommendation.matchScore }}%</span>
+  </div>
+
+  <!-- Key stats grid -->
+  <div class="stats-grid">
+    <div class="stat">
+      <span class="stat-label">Total Cost</span>
+      <span class="stat-value cost">{{ formatCost(recommendation.university.totalCostUSD) }}</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Min GPA</span>
+      <span class="stat-value">{{ recommendation.university.gpaRequirement ?? '—' }}</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Min IELTS</span>
+      <span class="stat-value">{{ recommendation.university.ieltsRequirement ?? '—' }}</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Difficulty</span>
+      <span class="stat-value diff-badge" [class]="difficultyClass">{{ difficultyLabel }}</span>
+    </div>
+  </div>
+
+  <!-- Intake & deadline -->
+  @if (recommendation.university.intakeSessions?.length) {
+    <div class="intake-row">
+      <mat-icon class="info-icon">event</mat-icon>
+      <span>Intake: {{ recommendation.university.intakeSessions!.join(', ') }}</span>
+      @if (recommendation.university.applicationDeadline) {
+        <span class="deadline">· Deadline: {{ recommendation.university.applicationDeadline }}</span>
+      }
+    </div>
+  }
+
+  <!-- Footer actions -->
+  <div class="card-footer">
+    <a class="btn-details"
+       [routerLink]="['/university', recommendation.university.id]"
+       [queryParams]="{ country: recommendation.countrySlug }">
+      <mat-icon>open_in_new</mat-icon>
+      View Details
+    </a>
+    @if (recommendation.university.applicationUrl) {
+      <a class="btn-apply"
+         [href]="recommendation.university.applicationUrl"
+         target="_blank" rel="noopener">
+        Apply Now
+      </a>
+    }
+  </div>
+</div>

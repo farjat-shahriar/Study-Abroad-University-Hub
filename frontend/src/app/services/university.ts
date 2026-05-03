@@ -123,7 +123,44 @@ export class UniversityService {
         u.localName.toLowerCase().includes(filters.searchTerm.toLowerCase()) ||
         u.city.toLowerCase().includes(filters.searchTerm.toLowerCase());
 
-      return matchCity && matchState && matchType && matchDegree && matchCost && matchSearch;
+      // Advanced eligibility filters
+      // Rule: if a university has NO data for a field → it always passes that filter
+      // (we can't exclude what we don't know; only exclude when we have explicit data that fails)
+      const matchBudget =
+        !filters.budgetMax ||
+        u.totalCostUSD == null ||
+        u.totalCostUSD <= filters.budgetMax;
+
+      // gpaMin = "my GPA" — show unis whose requirement is ≤ user's GPA, or have no requirement
+      const matchGpa =
+        !filters.gpaMin ||
+        u.gpaRequirement == null ||
+        u.gpaRequirement <= (filters.gpaMin ?? 0);
+
+      // ieltsMin = "my IELTS" — show unis whose requirement is ≤ user's IELTS, or have no requirement
+      const matchIelts =
+        !filters.ieltsMin ||
+        u.ieltsRequirement == null ||
+        u.ieltsRequirement <= (filters.ieltsMin ?? 0);
+
+      const matchDifficulty =
+        !filters.admissionDifficulty || u.admissionDifficulty === filters.admissionDifficulty;
+
+      // Scholarship: only exclude if explicitly marked false (unknown = include)
+      const matchScholarship =
+        !filters.scholarshipOnly || u.scholarshipAvailable !== false;
+
+      // Study gap: only exclude if explicitly marked false (unknown = include)
+      const matchStudyGap =
+        !filters.studyGapAllowed ||
+        u.studyGapAllowed == null ||
+        u.studyGapAllowed === true ||
+        u.studyGapAllowed === 'conditional';
+
+      return (
+        matchCity && matchState && matchType && matchDegree && matchCost && matchSearch &&
+        matchBudget && matchGpa && matchIelts && matchDifficulty && matchScholarship && matchStudyGap
+      );
     });
   }
 
@@ -163,5 +200,9 @@ export class UniversityService {
 
   isCountryAvailable(slug: string): boolean {
     return slug in this.countryDataUrls;
+  }
+
+  getAllCountrySlugs(): string[] {
+    return Object.keys(this.countryDataUrls);
   }
 }

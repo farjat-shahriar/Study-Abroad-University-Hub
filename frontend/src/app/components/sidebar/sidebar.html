@@ -20,6 +20,38 @@
 
   <!-- Nav -->
   <nav class="sidebar-nav">
+
+    <!-- ── Dashboard ── -->
+    <a class="nav-item nav-main-item"
+       routerLink="/"
+       routerLinkActive="active"
+       [routerLinkActiveOptions]="{ exact: true }"
+       [matTooltip]="isCollapsed ? 'Dashboard' : ''"
+       matTooltipPosition="right">
+      <mat-icon class="nav-mat-icon">dashboard</mat-icon>
+      @if (!isCollapsed) {
+        <span class="nav-label">Dashboard</span>
+      }
+    </a>
+
+    <!-- ── Find Universities ── -->
+    <a class="nav-item nav-main-item nav-find"
+       routerLink="/find"
+       routerLinkActive="active"
+       [matTooltip]="isCollapsed ? 'Find Universities' : ''"
+       matTooltipPosition="right">
+      <mat-icon class="nav-mat-icon">manage_search</mat-icon>
+      @if (!isCollapsed) {
+        <span class="nav-label">Find Universities</span>
+      }
+    </a>
+
+    <!-- ── Section divider: Countries ── -->
+    @if (!isCollapsed) {
+      <div class="sidebar-section-label">Countries</div>
+    }
+
+    <!-- ── Country Region Groups ── -->
     @for (group of regionGroups; track group.slug) {
 
       @if (isSingleCountryGroup(group)) {
@@ -77,7 +109,7 @@
   @if (!isCollapsed) {
     <div class="sidebar-footer">
       <mat-icon>public</mat-icon>
-      <span>v1.0 &mdash; 9 Regions</span>
+      <span>v1.0 &mdash; 38 Countries</span>
     </div>
   }
 </aside>

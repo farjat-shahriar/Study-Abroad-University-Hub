@@ -1,0 +1,185 @@
+<!-- Back nav -->
+<div class="detail-nav">
+  <button class="back-btn" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+    Back
+  </button>
+  @if (countrySlug) {
+    <a class="country-link" [routerLink]="['/country', countrySlug]">
+      <mat-icon>public</mat-icon>
+      All {{ countrySlug | titlecase }} universities
+    </a>
+  }
+</div>
+
+@if (loading) {
+  <app-loading-spinner />
+} @else if (error) {
+  <div class="error-state">
+    <mat-icon>error_outline</mat-icon>
+    <p>{{ error }}</p>
+  </div>
+} @else if (university) {
+
+  <!-- Header -->
+  <div class="detail-header">
+    <div class="detail-header-inner">
+      <h1 class="detail-title">{{ university.name }}</h1>
+      @if (university.localName && university.localName !== university.name) {
+        <p class="detail-local">{{ university.localName }}</p>
+      }
+      <div class="header-meta">
+        <span class="meta-chip">
+          <mat-icon>location_city</mat-icon>
+          {{ university.city }}@if (university.state) {, {{ university.state }}}
+        </span>
+        <span class="meta-chip">
+          <mat-icon>apartment</mat-icon>
+          {{ university.type }}
+        </span>
+        @if (university.ranking) {
+          <span class="meta-chip rank">
+            <mat-icon>emoji_events</mat-icon>
+            QS #{{ university.ranking }}
+          </span>
+        }
+        @if (university.admissionDifficulty) {
+          <span class="meta-chip diff" [class]="getDifficultyClass(university.admissionDifficulty)">
+            {{ getDifficultyLabel(university.admissionDifficulty) }}
+          </span>
+        }
+      </div>
+    </div>
+    <div class="header-actions">
+      @if (university.applicationUrl) {
+        <a class="btn-apply" [href]="university.applicationUrl" target="_blank" rel="noopener">
+          <mat-icon>send</mat-icon>
+          Apply Now
+        </a>
+      }
+      @if (university.websiteUrl) {
+        <a class="btn-website" [href]="university.websiteUrl" target="_blank" rel="noopener">
+          <mat-icon>open_in_new</mat-icon>
+          Official Website
+        </a>
+      }
+    </div>
+  </div>
+
+  <!-- Main content grid -->
+  <div class="detail-body">
+
+    <!-- Costs -->
+    <section class="detail-section">
+      <h2 class="section-title"><mat-icon>payments</mat-icon> Costs</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">BSc Tuition</span>
+          <span class="info-value">{{ formatEUR(university.bachelorTuitionEUR, university.isTuitionFree) }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">MSc Tuition</span>
+          <span class="info-value">{{ formatEUR(university.masterTuitionEUR, university.isTuitionFree) }}</span>
+        </div>
+        @if (university.semesterbeitrag) {
+          <div class="info-item">
+            <span class="info-label">Semester Fee</span>
+            <span class="info-value">€{{ university.semesterbeitrag }}/sem</span>
+          </div>
+        }
+        <div class="info-item">
+          <span class="info-label">Estimated Living Cost</span>
+          <span class="info-value">{{ formatUSD(university.livingCostUSD) }}</span>
+        </div>
+        <div class="info-item highlight">
+          <span class="info-label">Total Annual Cost (est.)</span>
+          <span class="info-value total">{{ formatUSD(university.totalCostUSD) }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Cost Category</span>
+          <span class="info-value">{{ university.costCategory }}</span>
+        </div>
+      </div>
+      @if (university.tuitionNote) {
+        <p class="section-note"><mat-icon>info</mat-icon> {{ university.tuitionNote }}</p>
+      }
+    </section>
+
+    <!-- Admission Requirements -->
+    <section class="detail-section">
+      <h2 class="section-title"><mat-icon>checklist</mat-icon> Admission Requirements</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Min GPA</span>
+          <span class="info-value">{{ university.gpaRequirement ?? 'Not specified' }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Min IELTS</span>
+          <span class="info-value">{{ university.ieltsRequirement ?? 'Not specified' }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">English Medium Allowed</span>
+          <span class="info-value">{{ university.englishMediumAllowed == null ? 'Not specified' : (university.englishMediumAllowed ? 'Yes' : 'No') }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Study Gap Allowed</span>
+          <span class="info-value">{{ getStudyGapLabel(university.studyGapAllowed) }}</span>
+        </div>
+      </div>
+      <div class="req-block">
+        <p class="req-label">BSc Requirements</p>
+        <p class="req-text">{{ university.bachelorRequirements || 'Not specified' }}</p>
+      </div>
+      <div class="req-block">
+        <p class="req-label">MSc Requirements</p>
+        <p class="req-text">{{ university.masterRequirements || 'Not specified' }}</p>
+      </div>
+    </section>
+
+    <!-- Intake & Application -->
+    <section class="detail-section">
+      <h2 class="section-title"><mat-icon>calendar_month</mat-icon> Intake &amp; Application</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Intake Sessions</span>
+          <span class="info-value">
+            @if (university.intakeSessions?.length) {
+              {{ university.intakeSessions!.join(', ') }}
+            } @else {
+              Not specified
+            }
+          </span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Application Deadline</span>
+          <span class="info-value">{{ university.applicationDeadline || 'Not specified' }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Degree Types</span>
+          <span class="info-value">{{ university.degreeTypes.join(', ') }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Category</span>
+          <span class="info-value">{{ university.category }}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scholarships -->
+    <section class="detail-section">
+      <h2 class="section-title"><mat-icon>card_giftcard</mat-icon> Scholarships</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Scholarship Available</span>
+          <span class="info-value" [class.highlight-yes]="university.scholarshipAvailable">
+            {{ university.scholarshipAvailable == null ? 'Not specified' : (university.scholarshipAvailable ? 'Yes' : 'No') }}
+          </span>
+        </div>
+      </div>
+      @if (university.scholarshipDetails) {
+        <p class="req-text">{{ university.scholarshipDetails }}</p>
+      }
+    </section>
+
+  </div>
+}

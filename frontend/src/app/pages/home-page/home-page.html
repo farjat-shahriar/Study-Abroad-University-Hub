@@ -1,0 +1,85 @@
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">
+      Find Your Perfect University Abroad
+    </h1>
+    <p class="hero-sub">
+      Enter your academic profile below and we'll match you with universities
+      across {{ totalScanned || '1,000+' }} programs in 40+ countries — ranked by your eligibility.
+    </p>
+  </div>
+</div>
+
+<!-- Profile Form or Edit Banner -->
+<div class="section">
+  @if (!profileSubmitted) {
+    <app-student-profile-form (profileSubmitted)="onProfileSubmitted($event)" />
+  } @else {
+    <!-- Profile summary banner -->
+    @if (currentProfile) {
+      <div class="profile-banner">
+        <div class="profile-banner-items">
+          <span class="banner-item">
+            <mat-icon>school</mat-icon>GPA <strong>{{ currentProfile.gpa }}</strong>
+          </span>
+          <span class="banner-item">
+            <mat-icon>translate</mat-icon>IELTS <strong>{{ currentProfile.ielts }}</strong>
+          </span>
+          <span class="banner-item">
+            <mat-icon>account_balance_wallet</mat-icon>Budget
+            <strong>up to ${{ currentProfile.budgetMax | number }}/yr</strong>
+          </span>
+        </div>
+        <button class="edit-btn" (click)="editProfile()">
+          <mat-icon>edit</mat-icon> Edit Profile
+        </button>
+      </div>
+    }
+  }
+</div>
+
+<!-- Results -->
+@if (profileSubmitted) {
+  <div class="section results-section">
+
+    @if (loading) {
+      <div class="loading-area">
+        <app-loading-spinner />
+        <p class="loading-text">Scanning universities across all countries…</p>
+        <mat-progress-bar mode="indeterminate" color="primary" />
+      </div>
+    } @else if (error) {
+      <div class="error-box">
+        <mat-icon>error_outline</mat-icon>
+        <p>{{ error }}</p>
+      </div>
+    } @else if (recommendations.length === 0) {
+      <div class="empty-state">
+        <mat-icon class="empty-icon">search_off</mat-icon>
+        <h3>No matching universities found</h3>
+        <p>Try increasing your budget or adjusting your profile — many universities don't have eligibility data yet and will surface as we add more.</p>
+        <button class="edit-btn" (click)="editProfile()">
+          <mat-icon>tune</mat-icon> Adjust Profile
+        </button>
+      </div>
+    } @else {
+      <div class="results-header">
+        <h2 class="results-title">
+          <mat-icon>verified</mat-icon>
+          {{ recommendations.length }} Matching Universities
+        </h2>
+        <p class="results-sub">
+          Scanned {{ totalScanned }} universities · ranked by eligibility match, affordability & admission difficulty
+        </p>
+      </div>
+
+      <div class="cards-grid">
+        @for (rec of recommendations; track rec.university.id; let i = $index) {
+          <app-recommendation-card [recommendation]="rec" [rank]="i + 1" />
+        }
+      </div>
+    }
+
+  </div>
+}

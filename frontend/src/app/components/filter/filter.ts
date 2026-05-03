@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
 import { FilterOptions, UniversityFilters } from '../../models/university.model';
 
 @Component({
@@ -13,6 +15,8 @@ import { FilterOptions, UniversityFilters } from '../../models/university.model'
     FormsModule,
     MatSelectModule,
     MatIconModule,
+    MatCheckboxModule,
+    MatInputModule,
   ],
   templateUrl: './filter.html',
   styleUrl: './filter.scss',
@@ -40,6 +44,12 @@ export class Filter implements OnInit, OnChanges {
       degreeType: [''],
       costCategory: [''],
       searchTerm: [''],
+      budgetMax: [null],
+      gpaMin: [null],
+      ieltsMin: [null],
+      admissionDifficulty: [''],
+      scholarshipOnly: [false],
+      studyGapAllowed: [false],
     });
   }
 
@@ -85,7 +95,15 @@ export class Filter implements OnInit, OnChanges {
   }
 
   onResetFilters(): void {
-    this.filterForm.reset({ country: this.countryName });
+    this.filterForm.reset({
+      country: this.countryName,
+      budgetMax: null,
+      gpaMin: null,
+      ieltsMin: null,
+      admissionDifficulty: '',
+      scholarshipOnly: false,
+      studyGapAllowed: false,
+    });
     this.citySearch = '';
     this.stateSearch = '';
     if (this.filterOptions) {

@@ -205,6 +205,31 @@
   }
 }
 
+// ── Advanced Row ──
+.advanced-row {
+  padding-top: 4px;
+  border-top: 1px dashed #E2E8F0;
+}
+
+.checkbox-group {
+  justify-content: flex-end;
+}
+
+.checkbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 4px;
+
+  ::ng-deep {
+    .mat-mdc-checkbox label {
+      font-size: 13px;
+      color: #334155;
+      cursor: pointer;
+    }
+  }
+}
+
 // ── Responsive ──
 @media (max-width: 768px) {
   .filter-card {

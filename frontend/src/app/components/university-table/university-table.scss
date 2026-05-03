@@ -157,6 +157,17 @@ table {
   font-size: 14px;
 }
 
+.uni-link {
+  color: #2563EB;
+  text-decoration: none;
+  display: block;
+
+  &:hover {
+    text-decoration: underline;
+    color: #1D4ED8;
+  }
+}
+
 .uni-local-name {
   font-size: 11px;
   color: #94A3B8;

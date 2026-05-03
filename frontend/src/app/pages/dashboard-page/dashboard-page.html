@@ -1,0 +1,77 @@
+<!-- Hero -->
+<div class="dash-hero">
+  <div class="dash-hero-content">
+    <h1 class="dash-title">Study Abroad University Hub</h1>
+    <p class="dash-sub">
+      Explore 500+ universities across 38 countries. Compare costs, eligibility,
+      scholarships and ranked recommendations — all in one place.
+    </p>
+    <div class="dash-hero-actions">
+      <a class="btn-primary" routerLink="/find">
+        <mat-icon>manage_search</mat-icon>
+        Find My Universities
+      </a>
+      <a class="btn-secondary" routerLink="/country/germany">
+        <mat-icon>explore</mat-icon>
+        Browse Countries
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Stats bar -->
+<div class="stats-bar">
+  @for (s of stats; track s.label) {
+    <div class="stat-item">
+      <mat-icon [style.color]="s.color">{{ s.icon }}</mat-icon>
+      <div>
+        <div class="stat-value">{{ s.value }}</div>
+        <div class="stat-label">{{ s.label }}</div>
+      </div>
+    </div>
+  }
+</div>
+
+<!-- Browse by category -->
+<div class="dash-section">
+  <h2 class="section-heading">
+    <mat-icon>tune</mat-icon>
+    Browse by Category
+  </h2>
+  <p class="section-sub">Pick a category to find universities that match your specific criteria.</p>
+
+  <div class="category-grid">
+    @for (item of browseCategories; track item.label) {
+      <a class="cat-card" [routerLink]="item.route">
+        <div class="cat-icon" [style.background]="item.accent + '18'" [style.color]="item.accent">
+          <mat-icon>{{ item.icon }}</mat-icon>
+        </div>
+        <div class="cat-text">
+          <span class="cat-label">{{ item.label }}</span>
+          <span class="cat-desc">{{ item.description }}</span>
+        </div>
+        <mat-icon class="cat-arrow">chevron_right</mat-icon>
+      </a>
+    }
+  </div>
+</div>
+
+<!-- Regions overview -->
+<div class="dash-section">
+  <h2 class="section-heading">
+    <mat-icon>map</mat-icon>
+    Regions Covered
+  </h2>
+
+  <div class="regions-grid">
+    @for (r of regionStats; track r.label) {
+      <div class="region-chip"
+           [routerLink]="r.slug ? ['/country', r.slug] : null"
+           [class.clickable]="r.slug">
+        <span class="region-flag">{{ r.flag }}</span>
+        <span class="region-name">{{ r.label }}</span>
+        <span class="region-count">{{ r.count }} {{ r.count === 1 ? 'country' : 'countries' }}</span>
+      </div>
+    }
+  </div>
+</div>

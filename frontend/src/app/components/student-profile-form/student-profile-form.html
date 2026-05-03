@@ -1,0 +1,89 @@
+<div class="profile-card">
+  <div class="profile-card-header">
+    <mat-icon class="header-icon">person_search</mat-icon>
+    <div>
+      <h2 class="header-title">Find Your Best Universities</h2>
+      <p class="header-sub">Enter your academic profile to get personalized recommendations across all countries</p>
+    </div>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="profile-form">
+    <div class="form-grid">
+
+      <!-- GPA -->
+      <div class="field-group">
+        <label class="field-label">
+          <mat-icon class="label-icon">school</mat-icon>
+          GPA (0.0 – 4.0)
+        </label>
+        <input
+          type="number"
+          formControlName="gpa"
+          class="field-input"
+          min="0" max="4" step="0.1"
+          placeholder="e.g. 3.2">
+        @if (submitted && form.get('gpa')?.invalid) {
+          <span class="field-error">Enter a GPA between 0.0 and 4.0</span>
+        }
+        <span class="field-hint">Use your cumulative GPA on a 4.0 scale</span>
+      </div>
+
+      <!-- IELTS -->
+      <div class="field-group">
+        <label class="field-label">
+          <mat-icon class="label-icon">translate</mat-icon>
+          IELTS Score (0.0 – 9.0)
+        </label>
+        <input
+          type="number"
+          formControlName="ielts"
+          class="field-input"
+          min="0" max="9" step="0.5"
+          placeholder="e.g. 6.5">
+        @if (submitted && form.get('ielts')?.invalid) {
+          <span class="field-error">Enter an IELTS band score between 0 and 9</span>
+        }
+        <span class="field-hint">Overall band score from your most recent test</span>
+      </div>
+
+      <!-- Budget Min -->
+      <div class="field-group">
+        <label class="field-label">
+          <mat-icon class="label-icon">attach_money</mat-icon>
+          Minimum Budget (USD/yr)
+        </label>
+        <input
+          type="number"
+          formControlName="budgetMin"
+          class="field-input"
+          min="0" step="1000"
+          placeholder="e.g. 0">
+        <span class="field-hint">Tuition + living costs combined per year</span>
+      </div>
+
+      <!-- Budget Max -->
+      <div class="field-group">
+        <label class="field-label">
+          <mat-icon class="label-icon">account_balance_wallet</mat-icon>
+          Maximum Budget (USD/yr)
+        </label>
+        <input
+          type="number"
+          formControlName="budgetMax"
+          class="field-input"
+          min="0" step="1000"
+          placeholder="e.g. 30000">
+        @if (submitted && form.get('budgetMax')?.invalid) {
+          <span class="field-error">Enter a valid annual budget in USD</span>
+        }
+        <span class="field-hint">Total yearly cost you can afford</span>
+      </div>
+
+    </div>
+
+    <button type="submit" class="submit-btn">
+      <mat-icon>search</mat-icon>
+      Find Matching Universities
+    </button>
+  </form>
+</div>

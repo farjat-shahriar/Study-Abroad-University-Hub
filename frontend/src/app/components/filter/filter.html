@@ -124,6 +124,78 @@
       </div>
     </div>
 
+    <!-- Advanced Eligibility Row -->
+    <div class="filter-row advanced-row">
+      <!-- Max Budget (USD/yr) -->
+      <div class="field-group">
+        <label class="field-label">Max Budget (USD/yr)</label>
+        <div class="custom-input-box">
+          <mat-icon class="input-icon">account_balance_wallet</mat-icon>
+          <input type="number"
+                 formControlName="budgetMax"
+                 placeholder="e.g. 20000"
+                 class="custom-input"
+                 min="0">
+        </div>
+      </div>
+
+      <!-- Min GPA -->
+      <div class="field-group">
+        <label class="field-label">My GPA (out of 4.0)</label>
+        <div class="custom-input-box">
+          <mat-icon class="input-icon">school</mat-icon>
+          <input type="number"
+                 formControlName="gpaMin"
+                 placeholder="e.g. 3.2"
+                 class="custom-input"
+                 min="0" max="4" step="0.1">
+        </div>
+      </div>
+
+      <!-- Min IELTS -->
+      <div class="field-group">
+        <label class="field-label">My IELTS Score</label>
+        <div class="custom-input-box">
+          <mat-icon class="input-icon">translate</mat-icon>
+          <input type="number"
+                 formControlName="ieltsMin"
+                 placeholder="e.g. 6.5"
+                 class="custom-input"
+                 min="0" max="9" step="0.5">
+        </div>
+      </div>
+
+      <!-- Admission Difficulty -->
+      <div class="field-group">
+        <label class="field-label">Admission Difficulty</label>
+        <div class="custom-select-wrapper">
+          <mat-select formControlName="admissionDifficulty"
+                      panelClass="bma-panel"
+                      placeholder="Any difficulty">
+            <mat-option value="">Any</mat-option>
+            <mat-option value="easy">Easy</mat-option>
+            <mat-option value="moderate">Moderate</mat-option>
+            <mat-option value="competitive">Competitive</mat-option>
+            <mat-option value="highly_competitive">Highly Competitive</mat-option>
+          </mat-select>
+          <mat-icon class="select-arrow">expand_more</mat-icon>
+        </div>
+      </div>
+
+      <!-- Checkboxes -->
+      <div class="field-group checkbox-group">
+        <label class="field-label">Options</label>
+        <div class="checkbox-list">
+          <mat-checkbox formControlName="scholarshipOnly" color="primary">
+            Scholarship available
+          </mat-checkbox>
+          <mat-checkbox formControlName="studyGapAllowed" color="primary">
+            Study gap allowed
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+
     <!-- Action Buttons -->
     <div class="filter-actions">
       <button type="button" class="btn-filter" (click)="onApplyFilters()">

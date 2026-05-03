@@ -164,6 +164,58 @@ $sidebar-collapsed: 64px;
   scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
 }
 
+// ── Main nav items (Dashboard, Find) ──
+.nav-main-item {
+  font-weight: 500;
+
+  .nav-mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: $sidebar-text-muted;
+    flex-shrink: 0;
+    transition: color 0.15s;
+  }
+
+  &:hover .nav-mat-icon,
+  &.active .nav-mat-icon {
+    color: #60A5FA;
+  }
+}
+
+.nav-find {
+  &.active {
+    background: rgba(16, 185, 129, 0.12);
+    border-left-color: #10B981;
+  }
+}
+
+// ── Browse By icon ──
+.browse-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: $sidebar-text-muted;
+  flex-shrink: 0;
+}
+
+// ── Category sub-items ──
+.nav-cat-item {
+  .nav-cat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: $sidebar-text-muted;
+    flex-shrink: 0;
+    transition: color 0.15s;
+  }
+
+  &:hover .nav-cat-icon,
+  &.active .nav-cat-icon {
+    color: #60A5FA;
+  }
+}
+
 // ── Nav items ──
 .nav-item {
   display: flex;

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -14,6 +15,7 @@ import { University, PaginationState, SortState } from '../../models/university.
   selector: 'app-university-table',
   imports: [
     CommonModule,
+    RouterLink,
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
